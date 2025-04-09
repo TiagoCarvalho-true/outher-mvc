@@ -8,5 +8,35 @@
       "Arte"
     ],
     "senha": "$2b$10$P9YnH0Qvb7XskBFsVgIcbe9340qIZyovXiLQ2E4e0DOMhnK1dnStq"
+  },
+  {
+    "nome": "a",
+    "email": "bru@gmail.com",
+    "idade": 17,
+    "genero": "Masculino",
+    "interesses": [
+      "Tecnologia"
+    ],
+    "senha": "$2b$10$anFBIlLhV2mEnc06dGIxo.c9k2/tsHlSkXQKxhgvbSl9U5zNbD5Pe"
+  },
+  {
+    "nome": "a",
+    "email": "bru@gmail.com",
+    "idade": 17,
+    "genero": "Masculino",
+    "interesses": [
+      "Tecnologia"
+    ],
+    "senha": "$2b$10$Vv7dbjbnsULzSX.hB54v5O7Xph5/lw4vMSCNXXRTM9MMvv3yANy8a"
+  },
+  {
+    "nome": "jhgjhgjhgjh",
+    "email": "bru@gmail.com",
+    "idade": 17,
+    "genero": "Masculino",
+    "interesses": [
+      "Tecnologia"
+    ],
+    "senha": "$2b$10$2.O4skXRBblguXL0m94IS.bjjfzrW/dhsFQ/F9nHxx2VVv5HeWfE."
   }
 ]
