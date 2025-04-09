@@ -1,0 +1,29 @@
+[
+  {
+    "nome": "carambolas silva"
+  },
+  {
+    "nome": "falgalçbla"
+  },
+  {
+    "nome": "macarrao",
+    "email": "macacodomarketingprogramadoren@gmail.com",
+    "idade": 88,
+    "genero": "Feminino",
+    "interesses": [
+      "Arte",
+      "Esportes"
+    ],
+    "senha": "blava"
+  },
+  {
+    "nome": "nsgkal",
+    "email": "macacodomarketingprogramadoren@gmail.com",
+    "idade": 99,
+    "genero": "Feminino",
+    "interesses": [
+      "Esportes"
+    ],
+    "senha": "$2b$10$skaxs8ZOyRja6x0xFHbjeuqHgotgOA53uZek02W8PZx/rEBef6o5W"
+  }
+]

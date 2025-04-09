@@ -11,10 +11,57 @@
     <h1 class="text-center mb-4">Cadastro de Usuário</h1>
 
     <form action="/cadastro" method="POST" class="bg-secondary p-4 rounded shadow-lg">
+
       <div class="mb-3">
         <label for="nome" class="form-label">Nome</label>
-        <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite seu nome" required>
+        <input type="text" class="form-control" id="nome" name="nome" required>
       </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="idade" class="form-label">Idade</label>
+        <input type="number" class="form-control" id="idade" name="idade" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Gênero</label>
+        <div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="genero" id="masculino" value="Masculino" required>
+            <label class="form-check-label" for="masculino">Masculino</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="genero" id="feminino" value="Feminino">
+            <label class="form-check-label" for="feminino">Feminino</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Interesses</label><br>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="interesses" value="Tecnologia">
+          <label class="form-check-label">Tecnologia</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="interesses" value="Arte">
+          <label class="form-check-label">Arte</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" name="interesses" value="Esportes">
+          <label class="form-check-label">Esportes</label>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="senha" class="form-label">Senha</label>
+        <input type="password" class="form-control" id="senha" name="senha" required>
+      </div>
+
       <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
     </form>
   </div>
