@@ -1,23 +1,20 @@
-const fs = require('fs').promises;
-const path = require('path');
-const { salvarUsuario } = require('../model/cadastroModel');
-const bcrypt = require('bcrypt'); // Adicionado para segurança das senhas
+// controller/cadastroController.js
 
-// Função para cadastrar um usuário
+const { salvarUsuario, getUsuarios } = require('../model/cadastroModel');
+const bcrypt = require('bcrypt');
+
 exports.cadastrarUsuario = async (req, res) => {
   try {
     const { nome, email, idade, genero, senha } = req.body;
 
     let interesses = req.body.interesses || [];
-    if (!Array.isArray(interesses)) {
-      interesses = [interesses];
-    }
+    if (!Array.isArray(interesses)) interesses = [interesses];
 
     if (!nome || !email || isNaN(idade) || !senha) {
       return res.status(400).send('Por favor, preencha todos os campos obrigatórios corretamente.');
     }
 
-    const hashedSenha = await bcrypt.hash(senha, 10); // Criptografa a senha
+    const hashedSenha = await bcrypt.hash(senha, 10);
 
     const usuario = {
       nome,
@@ -28,7 +25,7 @@ exports.cadastrarUsuario = async (req, res) => {
       senha: hashedSenha,
     };
 
-    salvarUsuario(usuario);
+    await salvarUsuario(usuario);
     res.send(`<h2>Usuário ${nome} cadastrado com sucesso!</h2><a href="/">Voltar</a>`);
   } catch (err) {
     console.error('Erro ao cadastrar usuário:', err);
@@ -36,32 +33,23 @@ exports.cadastrarUsuario = async (req, res) => {
   }
 };
 
-// Função para listar usuários
+// NOVA LISTAGEM com HTML dinâmico separado
 exports.listarUsuarios = async (req, res) => {
-  const filePath = path.join(__dirname, 'usuarios.json');
-
-
   try {
-    // Verifica se o arquivo existe, caso contrário, cria um vazio
-    if (!fs.existsSync(filePath)) {
-      await fs.writeFile(filePath, '[]');
-    }
-
-    const data = await fs.readFile(filePath, 'utf-8');
-    const usuarios = JSON.parse(data);
+    const usuarios = await getUsuarios();
 
     let html = `
     <!DOCTYPE html>
     <html lang="pt-br">
     <head>
       <meta charset="UTF-8">
-      <title>Usuários Cadastrados</title>
+      <title>Lista de Usuários</title>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
-    <body class="bg-dark text-white">
+    <body class="bg-secondary text-light">
       <div class="container mt-5">
         <h1 class="text-center mb-4">Usuários Cadastrados</h1>
-        <table class="table table-dark table-hover table-bordered table-striped">
+        <table class="table table-dark table-hover table-bordered text-white">
           <thead>
             <tr>
               <th>Nome</th>
@@ -69,7 +57,6 @@ exports.listarUsuarios = async (req, res) => {
               <th>Idade</th>
               <th>Gênero</th>
               <th>Interesses</th>
-              <th>Senha</th>
             </tr>
           </thead>
           <tbody>
@@ -78,37 +65,45 @@ exports.listarUsuarios = async (req, res) => {
     if (usuarios.length === 0) {
       html += `
         <tr>
-          <td colspan="6" class="text-center">Nenhum usuário cadastrado ainda.</td>
+          <td colspan="5" class="text-center">Nenhum usuário cadastrado ainda.</td>
         </tr>
       `;
     } else {
-      usuarios.forEach((user) => {
-        const interesses = Array.isArray(user.interesses) ? user.interesses : [];
+      usuarios.forEach(user => {
         html += `
-          <tr>
-            <td>${user.nome}</td>
-            <td>${user.email}</td>
-            <td>${user.idade}</td>
-            <td>${user.genero}</td>
-            <td>${interesses.join(', ') || 'Sem interesses'}</td>
-            <td>${user.senha}</td>
-          </tr>
-        `;
+        <tr>
+          <td>${user.nome}</td>
+          <td>${user.email}</td>
+          <td>${user.idade}</td>
+          <td>${user.genero}</td>
+          <td>${Array.isArray(user.interesses) ? user.interesses.join(', ') : 'Nenhum'}</td>
+        </tr>`;
       });
     }
 
     html += `
           </tbody>
         </table>
-        <a href="/" class="btn btn-primary mt-3">Voltar ao Cadastro</a>
+        <div class="text-center">
+          <a href="/" class="btn btn-light mt-3">Voltar ao Cadastro</a>
+        </div>
       </div>
     </body>
-    </html>
-    `;
+    </html>`;
 
     res.send(html);
   } catch (err) {
+    console.error('Erro ao listar usuários:', err);
+    res.status(500).send('Erro no servidor ao listar usuários.');
+  }
+};
+// nova função no cadastroController.js
+exports.getUsuariosAPI = async (req, res) => {
+  try {
+    const usuarios = await getUsuarios();
+    res.json(usuarios);
+  } catch (err) {
     console.error('Erro ao carregar os usuários:', err);
-    res.status(500).send('Erro no servidor ao carregar os usuários.');
+    res.status(500).json({ erro: 'Erro no servidor ao carregar os usuários.' });
   }
 };
